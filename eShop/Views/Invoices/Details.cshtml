@@ -1,0 +1,71 @@
+﻿@model eShop.ViewModels.InvoiceViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Invoice</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Invoice.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Invoice.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Invoice.Customer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Invoice.Customer.ID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Invoice.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<hr />
+<h3>Products on this invoice</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.InvoiceProducts)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @(item.Quantity *item.Product.Price)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="InvoiceProducts" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-controller="InvoiceProducts" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-controller="InvoiceProducts" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
